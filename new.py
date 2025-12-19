@@ -6,7 +6,7 @@ from streamlit_autorefresh import st_autorefresh
 # ======================================================
 # CONFIG
 # ======================================================
-REFRESH_INTERVAL_MS = 1000  # 1 second
+REFRESH_INTERVAL_MS = 60000  # 1 second
 
 HIGH_IMPACT_KEYWORDS = [
     "rate cut", "rate hike", "fed", "rbi", "inflation",
