@@ -103,3 +103,15 @@ for feed_url in NEWS_FEEDS[impact_type]:
 # ======================================================
 if high_impact_found:
     st.toast("🚨 High Impact Market News Detected!", icon="⚠️")
+
+
+
+st.markdown("""
+---
+**Designed by:-  
+Gaurav Singh Yadav**   
+🩷💛🩵💙🩶💜🤍🤎💖  Built With Love 🫶  
+Energy | Commodity | Quant Intelligence 📶  
+📱 +91-8003994518 〽️   
+📧 yadav.gauravsingh@gmail.com ™️
+""")
