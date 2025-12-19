@@ -3,6 +3,29 @@ import feedparser
 from datetime import datetime
 from streamlit_autorefresh import st_autorefresh
 
+def hash_pwd(pwd):
+    return hashlib.sha256(pwd.encode()).hexdigest()
+
+USERS = st.secrets["users"]
+
+if "authenticated" not in st.session_state:
+    st.session_state.authenticated = False
+
+if not st.session_state.authenticated:
+    st.title("🔐 Login Required")
+
+    u = st.text_input("Username")
+    p = st.text_input("Password", type="password")
+
+    if st.button("Login"):
+        if u in USERS and hash_pwd(p) == USERS[u]:
+            st.session_state.authenticated = True
+            st.rerun()
+        else:
+            st.error("Invalid credentials")
+
+    st.stop()
+
 # ======================================================
 # CONFIG
 # ======================================================
