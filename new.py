@@ -2,6 +2,7 @@ import streamlit as st
 import feedparser
 from datetime import datetime
 from streamlit_autorefresh import st_autorefresh
+import hashlib
 
 def hash_pwd(pwd):
     return hashlib.sha256(pwd.encode()).hexdigest()
