@@ -64,7 +64,7 @@ with col1:
     )
 
 with col2:
-    st.markdown("⏱ **Auto Refresh:** Every 1 second")
+    st.markdown("⏱ **Auto Refresh:** Every 1 Minute")
 
 with col3:
     st.markdown(f"🕒 **Last Update:** {datetime.now().strftime('%H:%M:%S')}")
