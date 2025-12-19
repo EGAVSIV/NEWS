@@ -112,6 +112,6 @@ st.markdown("""
 Gaurav Singh Yadav**   
 🩷💛🩵💙🩶💜🤍🤎💖  Built With Love 🫶  
 Energy | Commodity | Quant Intelligence 📶  
-📱 +91-8003994518 〽️   
+📱 +91-8003994518_420 〽️   
 📧 yadav.gauravsingh@gmail.com ™️
 """)
