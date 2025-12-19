@@ -1,7 +1,7 @@
 import streamlit as st
 import feedparser
-import time
 from datetime import datetime
+from streamlit_autorefresh import st_autorefresh
 
 # ======================================================
 # CONFIG
@@ -46,8 +46,8 @@ st.set_page_config(
 st.title("📡 Indian Market News Intelligence Dashboard")
 st.caption("Live News | High Impact Alerts | Multi-Source")
 
-# Auto refresh
-st.experimental_autorefresh(
+# ✅ CORRECT AUTO-REFRESH
+st_autorefresh(
     interval=REFRESH_INTERVAL_MS,
     key="news_refresh"
 )
@@ -60,11 +60,11 @@ col1, col2, col3 = st.columns(3)
 with col1:
     impact_type = st.selectbox(
         "🎯 Impact Type",
-        ["📈 Equity (India)", "🛢️ Commodities", "🌍 Global"]
+        list(NEWS_FEEDS.keys())
     )
 
 with col2:
-    st.markdown("⏱ **Auto Refresh:** 1 second")
+    st.markdown("⏱ **Auto Refresh:** Every 1 second")
 
 with col3:
     st.markdown(f"🕒 **Last Update:** {datetime.now().strftime('%H:%M:%S')}")
@@ -75,15 +75,14 @@ with col3:
 st.divider()
 st.subheader(f"📰 Latest News — {impact_type}")
 
-feeds = NEWS_FEEDS[impact_type]
 high_impact_found = False
 
-for feed_url in feeds:
+for feed_url in NEWS_FEEDS[impact_type]:
     feed = feedparser.parse(feed_url)
 
     for entry in feed.entries[:10]:
         title = entry.title
-        link = entry.link.lower()
+        link = entry.link
 
         is_high_impact = any(
             kw in title.lower() for kw in HIGH_IMPACT_KEYWORDS
@@ -95,12 +94,12 @@ for feed_url in feeds:
         else:
             st.success(f"🟢 {title}")
 
-        st.markdown(f"🔗 [Read Full News]({entry.link})")
+        st.markdown(f"🔗 [Read Full News]({link})")
         st.caption(f"🕒 {entry.get('published', 'Time not available')}")
         st.markdown("---")
 
 # ======================================================
-# ALERT SECTION
+# ALERT
 # ======================================================
 if high_impact_found:
     st.toast("🚨 High Impact Market News Detected!", icon="⚠️")
