@@ -51,7 +51,13 @@ NEWS_FEEDS = {
     "🛢️ Commodities": [
         "https://economictimes.indiatimes.com/commodity/rssfeeds/1167488.cms",
         "https://oilprice.com/rss/main",
-        "https://www.kitco.com/rss/news"
+        "https://www.kitco.com/rss/news",
+        "https://www.reuters.com/markets/commodities/energy",
+        "https://lngjournal.com",
+        "https://www.fxempire.com/commodities/natural-gas",
+        "https://www.investing.com/news/commodities-news",
+        "https://oilprice.com/Energy/Energy-General",
+        "https://www.alcircle.com/news"
     ],
     "🌍 Global": [
         "https://www.reuters.com/rssFeed/worldNews",
