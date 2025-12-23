@@ -6,17 +6,28 @@ import hashlib
 import time
 import base64
 
-def play_alert_sound():
-    sound_file = "https://actions.google.com/sounds/v1/alarms/beep_short.ogg"
+# ======================================================
+# SOUND MAP (Different sound per category)
+# ======================================================
+SOUND_MAP = {
+    "📈 Equity (India)": "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg",
+    "🛢️ Commodities": "https://actions.google.com/sounds/v1/alarms/beep_short.ogg",
+    "🌍 Global": "https://actions.google.com/sounds/v1/alarms/siren_whistle.ogg",
+}
 
-    st.markdown(
-        f"""
-        <audio autoplay>
-            <source src="{sound_file}" type="audio/ogg">
-        </audio>
-        """,
-        unsafe_allow_html=True
-    )
+def play_alert_sound(category):
+    sound_url = SOUND_MAP.get(category)
+
+    if sound_url:
+        st.markdown(
+            f"""
+            <audio autoplay>
+                <source src="{sound_url}" type="audio/ogg">
+            </audio>
+            """,
+            unsafe_allow_html=True
+        )
+
 
 
 def hash_pwd(pwd):
@@ -43,8 +54,9 @@ if not st.session_state.authenticated:
     st.stop()
 
 
-if "alert_played" not in st.session_state:
-    st.session_state.alert_played = False
+if "seen_news_hashes" not in st.session_state:
+    st.session_state.seen_news_hashes = set()
+
 
 
 # ======================================================
@@ -161,13 +173,21 @@ for feed_url in NEWS_FEEDS[impact_type]:
         title = entry.title
         link = entry.link
 
+        news_hash = hashlib.sha256(title.encode()).hexdigest()
         is_high_impact = any(
             kw in title.lower() for kw in HIGH_IMPACT_KEYWORDS
         )
+        is_new_news = news_hash not in st.session_state.seen_news_hashes
+        if is_high_impact:
+            st.error(f"🚨 HIGH IMPACT: {title}")
 
         if is_high_impact:
             high_impact_found = True
             st.error(f"🚨 HIGH IMPACT: {title}")
+            if is_new_news:
+                high_impact_found = True
+                play_alert_sound(impact_type)
+                st.session_state.seen_news_hashes.add(news_hash)
         else:
             st.success(f"🟢 {title}")
 
@@ -179,7 +199,7 @@ for feed_url in NEWS_FEEDS[impact_type]:
 # ALERT
 # ======================================================
 if high_impact_found:
-    st.toast("🚨 High Impact Market News Detected!", icon="⚠️")
+    st.toast("🚨 NEW High Impact Market News Detected!", icon="⚠️")
 
     if not st.session_state.alert_played:
         play_alert_sound()
