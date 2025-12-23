@@ -4,6 +4,20 @@ from datetime import datetime
 from streamlit_autorefresh import st_autorefresh
 import hashlib
 import time
+import base64
+
+def play_alert_sound():
+    sound_file = "https://actions.google.com/sounds/v1/alarms/beep_short.ogg"
+
+    st.markdown(
+        f"""
+        <audio autoplay>
+            <source src="{sound_file}" type="audio/ogg">
+        </audio>
+        """,
+        unsafe_allow_html=True
+    )
+
 
 def hash_pwd(pwd):
     return hashlib.sha256(pwd.encode()).hexdigest()
@@ -27,6 +41,11 @@ if not st.session_state.authenticated:
             st.error("Invalid credentials")
 
     st.stop()
+
+
+if "alert_played" not in st.session_state:
+    st.session_state.alert_played = False
+
 
 # ======================================================
 # CONFIG
@@ -161,6 +180,14 @@ for feed_url in NEWS_FEEDS[impact_type]:
 # ======================================================
 if high_impact_found:
     st.toast("🚨 High Impact Market News Detected!", icon="⚠️")
+
+    if not st.session_state.alert_played:
+        play_alert_sound()
+        st.session_state.alert_played = True
+else:
+    # Reset flag when no high impact news exists
+    st.session_state.alert_played = False
+
 
 
 
