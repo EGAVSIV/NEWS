@@ -101,7 +101,7 @@ NEWS_FEEDS = {
 # STREAMLIT CONFIG
 # ======================================================
 st.set_page_config(
-    page_title="📡 Market News Intelligence",
+    page_title="Market News Intelligence",
     layout="wide",
     page_icon="📰🗞️"
 )
