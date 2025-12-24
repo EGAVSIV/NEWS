@@ -103,7 +103,7 @@ NEWS_FEEDS = {
 st.set_page_config(
     page_title="📡 Market News Intelligence",
     layout="wide",
-    page_icon="📡"
+    page_icon="📰🗞️"
 )
 
 # 🔄 MANUAL + AUTO REFRESH (NO EXTERNAL LIB)
