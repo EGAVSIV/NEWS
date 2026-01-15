@@ -62,11 +62,26 @@ st.markdown("## 🌍 Real-Time News Dashboard")
 st.caption("Fast • Filterable • Market Ready")
 
 # ================= ROUTING =================
+
+country_map = {
+    "India 🇮🇳": "IN",
+    "United States 🇺🇸": "US",
+    "World 🌍": "US"
+}
+
+country_label = st.sidebar.selectbox(
+    "Country",
+    list(country_map.keys())
+)
+
+country = country_map[country_label]
+
 params = {
     "country": country,
     "lang": "en",
     "limit": limit
 }
+
 
 if category == "Top Headlines":
     news = fetch("/top-headlines", params)
