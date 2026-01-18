@@ -135,6 +135,10 @@ if auto_refresh:
 
 st.title("📡 Indian Market News Intelligence Dashboard")
 st.caption("Live News | High Impact Alerts | Multi-Source")
+col_logo, col_ticker = st.columns([0.22, 0.78]) 
+with col_logo: 
+    st.image("Assets/sgy1.png", width=220)
+
 
 # ✅ CORRECT AUTO-REFRESH
 st_autorefresh(
