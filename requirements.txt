@@ -1,3 +1,5 @@
 streamlit
 feedparser
 streamlit-autorefresh
+requests
+feedparser
