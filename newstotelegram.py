@@ -9,7 +9,7 @@ from pathlib import Path
 # TELEGRAM CONFIG
 # ======================================================
 
-BOT_TOKEN = "YOUR_BOT_TOKEN"
+BOT_TOKEN = "8268990134:AAGJJQrPzbi_3ROJWlDzF1sOl1RJLWP1t50"
 
 CHAT_IDS = [
     "5332984891",
