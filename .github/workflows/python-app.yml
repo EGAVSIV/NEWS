@@ -24,7 +24,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run News Bot
-        run: python news_bot.py
+        run: newstotelegram.py
 
       - name: Commit updated news database
         run: |
