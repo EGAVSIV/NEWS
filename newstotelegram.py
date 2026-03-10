@@ -19,12 +19,12 @@ CHAT_IDS = [
 TELEGRAM_URL = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
 # ======================================================
-# STORAGE FILE
+# HASH STORAGE
 # ======================================================
 
-HASH_FILE = "sent_news.json"
+HASH_FILE = Path("sent_news.json")
 
-if Path(HASH_FILE).exists():
+if HASH_FILE.exists():
     with open(HASH_FILE, "r") as f:
         sent_hashes = set(json.load(f))
 else:
@@ -49,7 +49,7 @@ def send_telegram(message):
         try:
             requests.post(TELEGRAM_URL, data=payload, timeout=10)
         except Exception as e:
-            print("Telegram error:", e)
+            print("Telegram Error:", e)
 
 
 # ======================================================
@@ -64,7 +64,7 @@ HIGH_IMPACT_KEYWORDS = [
 
 
 # ======================================================
-# RSS FEEDS
+# RSS SOURCES
 # ======================================================
 
 NEWS_FEEDS = {
@@ -99,11 +99,11 @@ def scan_news():
 
     for category, feeds in NEWS_FEEDS.items():
 
-        for url in feeds:
+        for feed_url in feeds:
 
             try:
 
-                feed = feedparser.parse(url, agent="Mozilla/5.0")
+                feed = feedparser.parse(feed_url, agent="Mozilla/5.0")
 
                 for entry in feed.entries[:10]:
 
@@ -113,14 +113,14 @@ def scan_news():
 
                     news_hash = hashlib.sha256(title.encode()).hexdigest()
 
-                    # Skip if already sent
+                    # Skip already sent
                     if news_hash in sent_hashes:
                         continue
 
                     sent_hashes.add(news_hash)
 
                     is_high_impact = any(
-                        k in title.lower() for k in HIGH_IMPACT_KEYWORDS
+                        kw in title.lower() for kw in HIGH_IMPACT_KEYWORDS
                     )
 
                     now = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -157,11 +157,11 @@ def scan_news():
                     send_telegram(message)
 
             except Exception as e:
-                print("Feed error:", e)
+                print("Feed Error:", e)
 
 
 # ======================================================
-# SAVE HASHES
+# SAVE HASH FILE
 # ======================================================
 
 def save_hashes():
